@@ -19,21 +19,13 @@ app.use(session({
   resave: true
 }));
 app.use(bodyParser.json());
+// 
+// app.use(function(req,res,next){
+//   console.log(req.session);
+//   next();
+// });
 
-app.use(function(req,res,next){
-  console.log(req.session);
-  next();
-});
-
-app.post('/cart', function(req,res,next){
-  if(!req.session.cart){
-    req.session.cart = [];
-  }
-  req.session.cart.push(req.body);
-  res.json(req.session.cart);
-});
-
-app.get('/users', userCtrl.login);
+app.get('/api/profiles', profileCtrl.friendProfiles);
 
 app.post('/api/login', userCtrl.login);
 

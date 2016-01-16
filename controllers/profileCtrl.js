@@ -1,4 +1,3 @@
-
 //////////////////
 //profileCtrl.js//
 //////////////////
@@ -28,6 +27,20 @@ var profiles = [
 module.exports = {
   profiles: profiles,
   friendProfiles: function(req,res,next){
-    res.send('Herp Derp');
+    // var friends = req.session.currentUser.friends;
+    console.log(req.session.currentUser.friends);
+    // friends.forEach(function(friend, fi){
+    //
+    //   profiles.forEach(function(profile, pi){
+    //     if(profile.name === friend.name){
+    //       req.session.currentUser.friends.splice(fi, 1, 'Hello!');
+    //     }
+    //   });
+    //
+    // });
+    res.json({
+      currentUser: req.session.currentUser.name,
+      friends: req.session.currentUser.friends
+    });
   }
 };
