@@ -27,20 +27,19 @@ var profiles = [
 module.exports = {
   profiles: profiles,
   friendProfiles: function(req,res,next){
-    // var friends = req.session.currentUser.friends;
-    console.log(req.session.currentUser.friends);
-    // friends.forEach(function(friend, fi){
-    //
-    //   profiles.forEach(function(profile, pi){
-    //     if(profile.name === friend.name){
-    //       req.session.currentUser.friends.splice(fi, 1, 'Hello!');
-    //     }
-    //   });
-    //
-    // });
-    res.json({
+     var friends = req.session.currentUser.friends;
+
+     profiles.forEach(function(profile, pi){
+       friends.forEach(function(friend, fi){
+         if(friend == profile.name){
+           friends.splice(fi, 1, profile);
+         }
+       });
+     });
+
+    res.send({
       currentUser: req.session.currentUser.name,
-      friends: req.session.currentUser.friends
+      friends: friends
     });
   }
 };

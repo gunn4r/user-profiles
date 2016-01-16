@@ -27,15 +27,22 @@ var users = [
 module.exports = {
   users: users,
   login: function(req,res,next){
-    users.forEach(function(user, index) {
-      if(req.body.name === user.name){
-        if(req.body.password === user.password){
+    var found = false;
+    users.forEach(function(user) {
+      if(req.body.name === user.name && req.body.password === user.password){
           req.session.currentUser = user;
-          res.send({userFound: true, session: req.session});
-        }
-      } else {
-        res.send({userFound: false});
+          found = true;
       }
     });
-  }
+
+    if(found){
+      console.log('User Found');
+      res.send({userFound: true});
+    } else {
+      console.log('User Not Found');
+      res.send({userFound: false});
+    }
+
+  }//end function
+
 };

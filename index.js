@@ -8,26 +8,25 @@ var express = require('express'),
 
 var app = express();
 
-var corsOptions = {
-  origin: 'http://localhost:3000'
-};
+app.use(express.static(__dirname + '/public'));
 
-app.use(cors(corsOptions));
+app.use(bodyParser.json());
+
 app.use(session({
   secret: config.sessionSecret,
   saveUninitialized: true,
   resave: true
 }));
-app.use(bodyParser.json());
-// 
-// app.use(function(req,res,next){
-//   console.log(req.session);
-//   next();
-// });
+
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
+
+
+app.post('/api/login', userCtrl.login);
 
 app.get('/api/profiles', profileCtrl.friendProfiles);
 
-app.post('/api/login', userCtrl.login);
 
 var port = 3000;
 app.listen(port, function(){
